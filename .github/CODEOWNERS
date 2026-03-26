@@ -1,0 +1,30 @@
+# CODEOWNERS - Team Code Ownership Matrix
+
+# Global owners
+* @maintainer
+
+# Backend ownership
+/src/main/java/com/dollartracker/service/ @backend-lead @backend-team
+/src/main/java/com/dollartracker/controller/ @backend-lead @backend-team
+/src/main/java/com/dollartracker/security/ @security-team
+
+# Database & Repositories
+/src/main/java/com/dollartracker/repository/ @database-team @backend-lead
+/src/main/java/com/dollartracker/entity/ @database-team @backend-lead
+
+# Frontend ownership
+/src/main/resources/templates/ @frontend-team
+/src/main/resources/static/ @frontend-team
+
+# Test ownership
+/src/test/ @qa-team @backend-team
+
+# Configuration
+/pom.xml @devops-team
+/.github/ @devops-team
+/src/main/resources/application.yml @devops-team
+
+# Documentation
+/docs/ @tech-writer
+README.md @maintainer
+applicationprompt.md @product-owner

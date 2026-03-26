@@ -1,0 +1,98 @@
+# Build artifacts
+target/
+build/
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+
+# Compiled class files
+*.class
+.classes/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+*.iml
+*.sublime-project
+*.sublime-workspace
+.project
+.classpath
+.settings/
+
+# Maven
+.mvn/wrapper/maven-wrapper.jar
+mvnw
+mvnw.cmd
+
+# Gradle
+.gradle/
+gradle/
+build/
+gradlew
+gradlew.bat
+
+# Testing
+coverage/
+jacoco.xml
+*.coverage
+
+# Environment variables
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+logs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Maven wrapper
+.mvn/
+maven-wrapper.properties
+
+# Node (if using npm)
+node_modules/
+package-lock.json
+yarn.lock
+
+# Temporary files
+*.tmp
+*.bak
+*backup*
+
+# IntelliJ
+out/
+*.iws
+*.ipr
+
+# Eclipse
+.classpath
+.project
+.settings/
+bin/
+
+# Misc
+*.swp
+*.swo
+*~
+.gradle
+.idea
+*.iml
+*.sublime-*
+.vscode/*
+!.vscode/extensions.json
+*.orig

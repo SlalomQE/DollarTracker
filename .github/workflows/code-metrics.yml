@@ -12,7 +12,7 @@ jobs:
   metrics:
     name: Generate Code Metrics
     runs-on: ubuntu-latest
-     permissions:
+    permissions:
       contents: read
       pull-requests: write
       issues: write

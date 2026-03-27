@@ -16,7 +16,7 @@ public interface ExpenseRepository extends JpaRepository<Expense, String> {
     List<Expense> findExpensesByDateRange(@Param("userId") String userId, @Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
     
     @Query("SELECT e FROM Expense e WHERE e.userId = :userId AND e.transactionDate >= :startDate AND e.transactionDate < :endDate ORDER BY e.transactionDate DESC")
-    List<Expense> findLast7Days(@Param("userId") String userId, @Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
+    List<Expense> findLast30Days(@Param("userId") String userId, @Param("startDate") LocalDateTime startDate, @Param("endDate") LocalDateTime endDate);
     
     @Query("SELECT e FROM Expense e WHERE e.userId = :userId AND YEAR(e.transactionDate) = :year AND MONTH(e.transactionDate) = :month ORDER BY e.transactionDate DESC")
     List<Expense> findExpensesByMonth(@Param("userId") String userId, @Param("year") int year, @Param("month") int month);

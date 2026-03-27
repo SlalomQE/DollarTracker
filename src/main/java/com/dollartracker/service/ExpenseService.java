@@ -130,11 +130,11 @@ public class ExpenseService {
         return expenseRepository.findExpensesByDateRange(userId, startOfMonth, now);
     }
 
-    public List<Expense> getLast7DaysExpenses(String userId) {
-        LocalDateTime now = LocalDateTime.now();
-        LocalDateTime sevenDaysAgo = now.minusDays(7);
-        return expenseRepository.findExpensesByDateRange(userId, sevenDaysAgo, now);
-    }
+    // public List<Expense> getLast7DaysExpenses(String userId) {
+    //     LocalDateTime now = LocalDateTime.now();
+    //     LocalDateTime sevenDaysAgo = now.minusDays(7);
+    //     return expenseRepository.findExpensesByDateRange(userId, sevenDaysAgo, now);
+    // }
 
     public List<Expense> getExpensesFromMonthStart(String userId) {
         LocalDateTime now = LocalDateTime.now();

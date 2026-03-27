@@ -227,24 +227,18 @@ async function saveEditedExpense() {
 
         if (data.success) {
             showSuccess('Expense updated successfully!');
-            // Close the modal
+            // Close the modal properly
             const modalElement = document.getElementById('editModal');
-            const modal = bootstrap.Modal.getInstance(modalElement);
-            if (modal) {
-                modal.hide();
-            } else {
-                // Fallback: remove modal classes
-                modalElement.classList.remove('show');
-                modalElement.style.display = 'none';
-            }
-            // Remove backdrop if exists
-            const backdrop = document.querySelector('.modal-backdrop');
-            if (backdrop) {
-                backdrop.remove();
-            }
-            // Refresh both lists
-            searchExpenses();
-            loadLast7DaysExpenses();
+            // Hide modal using Bootstrap
+            const bsModal = bootstrap.Modal.getInstance(modalElement) || new bootstrap.Modal(modalElement);
+            bsModal.hide();
+            
+            // Wait for modal to close before refreshing
+            setTimeout(() => {
+                // Refresh both lists
+                loadLast7DaysExpenses();
+                searchExpenses();
+            }, 500);
         } else {
             showError(data.error || 'Failed to update expense');
         }

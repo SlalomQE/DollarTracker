@@ -124,10 +124,22 @@ public class ExpenseService {
         return expenseRepository.findExpensesByMonth(userId, currentMonth.getYear(), currentMonth.getMonthValue());
     }
 
+    public List<Expense> getLast30DaysExpenses(String userId) {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime startOfMonth = now.withDayOfMonth(1).withHour(0).withMinute(0).withSecond(0);
+        return expenseRepository.findExpensesByDateRange(userId, startOfMonth, now);
+    }
+
     public List<Expense> getLast7DaysExpenses(String userId) {
         LocalDateTime now = LocalDateTime.now();
         LocalDateTime sevenDaysAgo = now.minusDays(7);
-        return expenseRepository.findLast7Days(userId, sevenDaysAgo, now);
+        return expenseRepository.findExpensesByDateRange(userId, sevenDaysAgo, now);
+    }
+
+    public List<Expense> getExpensesFromMonthStart(String userId) {
+        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime monthStart = now.withDayOfMonth(1).withHour(0).withMinute(0).withSecond(0);
+        return expenseRepository.findExpensesByDateRange(userId, monthStart, now);
     }
 
     public void deleteExpense(String userId, String expenseId) throws Exception {

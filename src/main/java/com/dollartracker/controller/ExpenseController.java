@@ -58,7 +58,14 @@ public class ExpenseController {
                     .message("Expense updated successfully")
                     .timestamp(LocalDateTime.now().format(DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss")))
                     .build();
-            return ResponseEntity.ok(apiResponse);
+            return ResponseEntity.status(HttpStatus.OK).body(apiResponse);
+        } catch (IllegalArgumentException e) {
+            ApiResponse apiResponse = ApiResponse.builder()
+                    .success(false)
+                    .error(e.getMessage())
+                    .timestamp(LocalDateTime.now().format(DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss")))
+                    .build();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(apiResponse);
         } catch (Exception e) {
             ApiResponse apiResponse = ApiResponse.builder()
                     .success(false)
@@ -99,8 +106,31 @@ public class ExpenseController {
         }
     }
 
+    @GetMapping("/this-month")
+    public ResponseEntity<ApiResponse> getThisMonthExpenses(Authentication authentication) {
+        try {
+            String userId = (String) authentication.getPrincipal();
+            List<Expense> expenses = expenseService.getThisMonthExpenses(userId);
+            
+            ApiResponse apiResponse = ApiResponse.builder()
+                    .success(true)
+                    .data(expenses)
+                    .message("This month's expenses retrieved successfully")
+                    .timestamp(LocalDateTime.now().format(DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss")))
+                    .build();
+            return ResponseEntity.ok(apiResponse);
+        } catch (Exception e) {
+            ApiResponse apiResponse = ApiResponse.builder()
+                    .success(false)
+                    .error(e.getMessage())
+                    .timestamp(LocalDateTime.now().format(DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss")))
+                    .build();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiResponse);
+        }
+    }
+
     @GetMapping("/last-7-days")
-    public ResponseEntity<ApiResponse> getLast7DaysExpenses(Authentication authentication) {
+    public ResponseEntity<ApiResponse> getLastSevenDaysExpenses(Authentication authentication) {
         try {
             String userId = (String) authentication.getPrincipal();
             List<Expense> expenses = expenseService.getLast7DaysExpenses(userId);
@@ -109,6 +139,29 @@ public class ExpenseController {
                     .success(true)
                     .data(expenses)
                     .message("Last 7 days expenses retrieved successfully")
+                    .timestamp(LocalDateTime.now().format(DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss")))
+                    .build();
+            return ResponseEntity.ok(apiResponse);
+        } catch (Exception e) {
+            ApiResponse apiResponse = ApiResponse.builder()
+                    .success(false)
+                    .error(e.getMessage())
+                    .timestamp(LocalDateTime.now().format(DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss")))
+                    .build();
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(apiResponse);
+        }
+    }
+
+    @GetMapping("/from-month-start")
+    public ResponseEntity<ApiResponse> getExpensesFromMonthStart(Authentication authentication) {
+        try {
+            String userId = (String) authentication.getPrincipal();
+            List<Expense> expenses = expenseService.getExpensesFromMonthStart(userId);
+            
+            ApiResponse apiResponse = ApiResponse.builder()
+                    .success(true)
+                    .data(expenses)
+                    .message("Expenses from month start retrieved successfully")
                     .timestamp(LocalDateTime.now().format(DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss")))
                     .build();
             return ResponseEntity.ok(apiResponse);
@@ -133,7 +186,7 @@ public class ExpenseController {
                     .message("Expense deleted successfully")
                     .timestamp(LocalDateTime.now().format(DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm:ss")))
                     .build();
-            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(apiResponse);
+            return ResponseEntity.ok(apiResponse);
         } catch (Exception e) {
             ApiResponse apiResponse = ApiResponse.builder()
                     .success(false)

@@ -159,14 +159,14 @@ class ExpenseServiceTest {
     }
 
     @Test
-    void testGetLast7DaysExpenses() {
+    void testGetLast30DaysExpenses() {
         List<Expense> expenses = new ArrayList<>();
         expenses.add(testExpense);
 
-        when(expenseRepository.findLast7Days(anyString(), any(LocalDateTime.class), any(LocalDateTime.class)))
+        when(expenseRepository.findExpensesByDateRange(anyString(), any(LocalDateTime.class), any(LocalDateTime.class)))
                 .thenReturn(expenses);
 
-        List<Expense> result = expenseService.getLast7DaysExpenses(userId);
+        List<Expense> result = expenseService.getLast30DaysExpenses(userId);
 
         assertNotNull(result);
         assertEquals(1, result.size());
@@ -194,6 +194,20 @@ class ExpenseServiceTest {
                 .thenReturn(expenses);
 
         List<Expense> result = expenseService.getCurrentMonthExpenses(userId);
+
+        assertNotNull(result);
+        assertEquals(1, result.size());
+    }
+
+    @Test
+    void testGetExpensesFromMonthStart() {
+        List<Expense> expenses = new ArrayList<>();
+        expenses.add(testExpense);
+
+        when(expenseRepository.findExpensesByDateRange(anyString(), any(LocalDateTime.class), any(LocalDateTime.class)))
+                .thenReturn(expenses);
+
+        List<Expense> result = expenseService.getExpensesFromMonthStart(userId);
 
         assertNotNull(result);
         assertEquals(1, result.size());

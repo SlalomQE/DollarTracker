@@ -197,33 +197,43 @@ async function saveEditedExpense() {
     const date = document.getElementById('editDate').value;
     const comments = document.getElementById('editComments').value || '';
 
+    console.log('Saving expense:', { expenseId, category, amount, date, comments });
+
     if (!category || !amount || !date) {
         showError('Please fill all required fields');
         return;
     }
 
     try {
+        const requestBody = {
+            category: category,
+            amount: parseFloat(amount),
+            transactionDate: date,
+            comments: comments
+        };
+        
+        console.log('Request body:', requestBody);
+
         const response = await fetch(`/api/expenses/${expenseId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + getToken()
             },
-            body: JSON.stringify({
-                category: category,
-                amount: parseFloat(amount),
-                transactionDate: date,
-                comments: comments
-            })
+            body: JSON.stringify(requestBody)
         });
+
+        console.log('Response status:', response.status, response.ok);
 
         if (!response.ok) {
             const errorData = await response.json();
+            console.error('Error response:', errorData);
             showError(errorData.error || 'Failed to update expense');
             return;
         }
 
         const data = await response.json();
+        console.log('Success response:', data);
 
         if (data.success) {
             showSuccess('Expense updated successfully!');
